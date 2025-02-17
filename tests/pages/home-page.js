@@ -31,4 +31,8 @@ export class HomePage {
     );
     expect(token).not.toBeNull();
   }
+
+  async navigateTo(pageName) {
+    await this.page.locator(`a:text("${pageName}")`).click();
+  }
 }

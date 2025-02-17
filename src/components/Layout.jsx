@@ -1,4 +1,6 @@
-import { Outlet, Link } from "react-router-dom";
+// src/components/Layout.jsx
+
+import { Outlet, Link, useLocation } from "react-router-dom";
 import { ChevronDown, User } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../context/AuthContext";
@@ -7,6 +9,7 @@ function Layout() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { logout } = useAuth();
   const dropdownRef = useRef(null);
+  const location = useLocation();
 
   const handleLogout = () => {
     logout();
@@ -28,6 +31,18 @@ function Layout() {
     };
   }, [isDropdownOpen]);
 
+  // Helper function to determine if the link is active
+  const isActive = (path) => location.pathname === path;
+
+  // Define the navigation links in an array
+  const navLinks = [
+    { to: "/home", label: "Home" },
+    { to: "/dashboard", label: "Dashboard" },
+    { to: "/team", label: "Team" },
+    { to: "/projects", label: "Projects" },
+    { to: "/calendar", label: "Calendar" },
+  ];
+
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Navigation Bar */}
@@ -39,30 +54,19 @@ function Layout() {
               <span className="text-xl font-bold text-gray-800">My App</span>
               <div className="sm:ml-6">
                 <div className="flex space-x-4">
-                  <Link
-                    to="/home"
-                    className="rounded-md bg-gray-400 px-3 py-2 text-sm font-medium text-white"
-                  >
-                    Dashboard
-                  </Link>
-                  <Link
-                    to="/team"
-                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                  >
-                    Team
-                  </Link>
-                  <Link
-                    to="/projects"
-                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                  >
-                    Projects
-                  </Link>
-                  <Link
-                    to="/calendar"
-                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                  >
-                    Calendar
-                  </Link>
+                  {navLinks.map(({ to, label }) => (
+                    <Link
+                      key={to}
+                      to={to}
+                      className={`rounded-md px-3 py-2 text-sm font-medium ${
+                        isActive("/to")
+                          ? "bg-gray-400 text-white"
+                          : "text-gray-300 hover:bg-gray-700 hover:text-white"
+                      }`}
+                    >
+                      {label}
+                    </Link>
+                  ))}
                 </div>
               </div>
             </div>

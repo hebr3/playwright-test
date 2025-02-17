@@ -6,6 +6,7 @@ import { Navigate } from "react-router-dom";
 import Layout from "./components/Layout";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
 import Projects from "./pages/Projects";
 import Team from "./pages/Team";
 import Calendar from "./pages/Calendar";
@@ -27,6 +28,7 @@ function App() {
             }
           >
             <Route path="/home" element={<Home />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/team" element={<Team />} />
             <Route path="/calendar" element={<Calendar />} />
